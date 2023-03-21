@@ -1,3 +1,14 @@
+<?php
+
+require 'php/config.php';
+require 'php/Vaga.php';
+
+
+$obj_vaga = new vaga($mysql);
+$vaga = $obj_vaga->encontrarPorId($_GET['id']);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,9 +65,9 @@ https://templatemo.com/tm-556-catalog-z
         </div>
     </nav>
 
-    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg">
+    <div class="tm-hero d-flex justify-content-center align-items-center conteiner" data-parallax="scroll" data-image-src="img/hero.jpg">
         <form class="d-flex tm-search-form">
-            <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control tm-search-input" type="search" id="input" onkeyup="instantSearch()" placeholder="Pesquisar" aria-label="Pesquisar">
             <button class="btn btn-outline-success tm-search-btn" type="submit">
                 <i class="fas fa-search"></i>
             </button>
@@ -67,164 +78,55 @@ https://templatemo.com/tm-556-catalog-z
         <div class="row mb-4">
             <h2 class="col-12 tm-text-primary">Photo title goes here</h2>
         </div>
-        <div class="row tm-mb-90">            
-            <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
-                <img src="img/img-01-big.jpg" alt="Image" class="img-fluid">
-            </div>
-            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
-                <div class="tm-bg-gray tm-video-details">
-                    <p class="mb-4">
-                        Please support us by making <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a PayPal donation</a>. Nam ex nibh, efficitur eget libero ut, placerat aliquet justo. Cras nec varius leo.
-                    </p>
-                    <div class="text-center mb-5">
-                        <a href="#" class="btn btn-primary tm-btn-big">Download</a>
-                    </div>                    
-                    <div class="mb-4 d-flex flex-wrap">
-                        <div class="mr-4 mb-2">
-                            <span class="tm-text-gray-dark">Dimension: </span><span class="tm-text-primary">1920x1080</span>
-                        </div>
-                        <div class="mr-4 mb-2">
-                            <span class="tm-text-gray-dark">Format: </span><span class="tm-text-primary">JPG</span>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <h3 class="tm-text-gray-dark mb-3">License</h3>
-                        <p>Free for both personal and commercial use. No need to pay anything. No need to make any attribution.</p>
-                    </div>
-                    <div>
-                        <h3 class="tm-text-gray-dark mb-3">Tags</h3>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Cloud</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Bluesky</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Nature</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Background</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Timelapse</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Night</a>
-                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Real Estate</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mb-4">
-            <h2 class="col-12 tm-text-primary">
-                Related Photos
-            </h2>
-        </div>
+        
         <div class="row mb-3 tm-gallery">
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+
+        <!-- php -->
+        
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <a href="categoria.php?id=<?php echo $vaga['id_vaga'];?>">
                 <figure class="effect-ming tm-video-item">
                     <img src="img/img-01.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Hangers</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
+                    <div class="d-flex justify-content-between tm-text-white">
+                        <h2 ><?php echo $vaga['Cargo'];?></h2>
+                        
+                        
+                    </div>    
+                    <div class="d-flex justify-content-between tm-text-white">
+                    <input type="time" value="<?php echo $vaga['Carga_horaria'];?>"disabled>
+                    <input type="text" value="<?php echo $vaga['Salario'];?>" disabled>
+                    
+                        
+                    </div> 
+                        <p><?php echo $vaga['Requisitos'];?></p>         
+                        <button><a href="#">View more </a></button>
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">
                     <span class="tm-text-gray-light">16 Oct 2020</span>
                     <span>12,460 views</span>
                 </div>
+                    </a>
             </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/img-02.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Perfumes</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">12 Oct 2020</span>
-                    <span>11,402 views</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/img-03.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Clocks</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">8 Oct 2020</span>
-                    <span>9,906 views</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/img-04.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Plants</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">6 Oct 2020</span>
-                    <span>16,100 views</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/img-05.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Morning</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">26 Sep 2020</span>
-                    <span>16,008 views</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/img-06.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Pinky</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">22 Sep 2020</span>
-                    <span>12,860 views</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/img-07.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Bus</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">12 Sep 2020</span>
-                    <span>10,900 views</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/img-08.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>New York</h2>
-                        <a href="#">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">4 Sep 2020</span>
-                    <span>11,300 views</span>
-                </div>
-            </div>        
+        </a>
+
+           
+
+            <!-- fim php -->
+
+
+            
+                    
         </div> <!-- row -->
     </div> <!-- container-fluid, tm-container-content -->
 
     <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
         <div class="container-fluid tm-container-small">
             <div class="row">
-                <div class="col-lg-6 col-md-12 col-12 px-5 mb-5">
+                <div class="col-lg-6 col-md-12 col-12 px-5  item">
                     <h3 class="tm-text-primary mb-4 tm-footer-title">Sobre o First Work</h3>
                     <p>Estamos Construindo essa plataforma que vai auxiliar jovens inexperientes a ingressar no mercado de trabalho</p>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5  item">
                     <h3 class="tm-text-primary mb-4 tm-footer-title">Our Links</h3>
                     <ul class="tm-footer-links pl-0">
                         <li><a href="#">Advertise</a></li>
@@ -233,8 +135,8 @@ https://templatemo.com/tm-556-catalog-z
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
-                    <ul class="tm-social-links d-flex justify-content-end pl-0 mb-5">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5  item">
+                    <ul class="tm-social-links d-flex justify-content-end pl-0  item">
                         <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
                         <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
                         <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
@@ -261,5 +163,10 @@ https://templatemo.com/tm-556-catalog-z
             $('body').addClass('loaded');
         });
     </script>
+    <script src="js/index.js">
+    function instantSearch() {
+  document.querySelectorAll('.item').forEach(item => item.querySelectorAll('h2')[0].innerText.toLowerCase().indexOf(document.querySelector('#input').value.toLowerCase()) > -1 ? item.style.display = 'block' : item.style.display = 'none');
+}
+</script>
 </body>
 </html>

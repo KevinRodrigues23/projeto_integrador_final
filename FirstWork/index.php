@@ -1,3 +1,11 @@
+<?php 
+require 'php/config.php';
+include 'php/Vaga.php';
+$vaga = new vaga($mysql);
+$vagas = $vaga->exibirTodos(); // chamando a variavel que está na classe Produtos
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,9 +62,9 @@ https://templatemo.com/tm-556-catalog-z
         </div>
     </nav>
 
-    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg">
+    <div class="tm-hero d-flex justify-content-center align-items-center conteiner" data-parallax="scroll" data-image-src="img/hero.jpg">
         <form class="d-flex tm-search-form">
-            <input class="form-control tm-search-input" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+            <input class="form-control tm-search-input" type="search" id="input" onkeyup="instantSearch()" placeholder="Pesquisar" aria-label="Pesquisar">
             <button class="btn btn-outline-success tm-search-btn" type="submit">
                 <i class="fas fa-search"></i>
             </button>
@@ -75,21 +83,31 @@ https://templatemo.com/tm-556-catalog-z
             </div>
         </div>
         <div class="row tm-mb-90 tm-gallery">
-        	<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+
+        <?php foreach($vagas as $vaga) : ?>
+           
+        	<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <a href="categoria.php?id=<?php echo $vaga['id_vaga'];?>">
+                <figure class="effect-ming tm-video-item item item">
                     <img src="img/administracao.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Administração</h2>
-                        <a href="categoria.php">Ver vaga</a>
+                        <h2><b><?php echo $vaga['Cargo']; ?></b></h2>
+                        
                     </figcaption>                    
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">
                     <span class="tm-text-gray-light">18 Oct 2020</span>
                     <span>##</span>
                 </div>
+        </a>
             </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+       
+
+            <?php endforeach ?>
+
+
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item item">
                     <img src="img/agricultura.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>agricultura</h2>
@@ -101,8 +119,8 @@ https://templatemo.com/tm-556-catalog-z
                     <span>##</span>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item item">
                     <img src="img/biologia.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Biologia</h2>
@@ -115,8 +133,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item item">
                     <img src="img/cinema.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Cinema</h2>
@@ -129,8 +147,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
             
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item item">
+                <figure class="effect-ming tm-video-item item item">
                     <img src="img/construcao-civil.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Construção civil</h2>
@@ -143,8 +161,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item item">
+                <figure class="effect-ming tm-video-item item item">
                     <img src="img/eletrica.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Elétrica</h2>
@@ -157,8 +175,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item item">
+                <figure class="effect-ming tm-video-item item item">
                     <img src="img/enfermagem.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Emfermagem</h2>
@@ -171,8 +189,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/Engenharia.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Engenharia</h2>
@@ -185,8 +203,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/Industria.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Industria</h2>
@@ -199,8 +217,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/informatica.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Informatica</h2>
@@ -213,8 +231,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/medicina.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Medicina</h2>
@@ -227,8 +245,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/Musico.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Musica</h2>
@@ -241,8 +259,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/pesca.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Pesca</h2>
@@ -255,8 +273,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/quimica.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Quimica</h2>
@@ -269,8 +287,8 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
+                <figure class="effect-ming tm-video-item item">
                     <img src="img/seguranca.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Segurança</h2>
@@ -283,19 +301,7 @@ https://templatemo.com/tm-556-catalog-z
                 </div>
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="img/social_midia.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Social Midia</h2>
-                        <a href="categoria.php">View more</a>
-                    </figcaption>                    
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">3 Aug 2020</span>
-                    <span>##</span>
-                </div>
-            </div>         
+                     
         </div> <!-- row -->
         <div class="row tm-mb-90">
             <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
@@ -314,12 +320,12 @@ https://templatemo.com/tm-556-catalog-z
     <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
         <div class="container-fluid tm-container-small">
             <div class="row">
-                <div class="col-lg-6 col-md-12 col-12 px-5 mb-5">
+                <div class="col-lg-6 col-md-12 col-12 px-5 mb-5 item">
                     <h3 class="tm-text-primary mb-4 tm-footer-title">Sobre o First Work</h3>
                     <p>Estamos Construindo essa plataforma que vai auxiliar jovens inexperientes a ingressar no mercado de trabalho</p>
                 </div>
                 <!-- 
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5 item">
                     <h3 class="tm-text-primary mb-4 tm-footer-title">Our Links</h3>
                     <ul class="tm-footer-links pl-0">
                         <li><a href="#">Advertise</a></li>
@@ -328,8 +334,8 @@ https://templatemo.com/tm-556-catalog-z
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div> -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
-                    <ul class="tm-social-links d-flex justify-content-end pl-0 mb-5">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5 item">
+                    <ul class="tm-social-links d-flex justify-content-end pl-0 mb-5 item">
                         <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
                         <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
                         <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
@@ -355,5 +361,11 @@ https://templatemo.com/tm-556-catalog-z
             $('body').addClass('loaded');
         });
     </script>
+
+<script src="js/index.js">
+    function instantSearch() {
+  document.querySelectorAll('.item').forEach(item => item.querySelectorAll('h2')[0].innerText.toLowerCase().indexOf(document.querySelector('#input').value.toLowerCase()) > -1 ? item.style.display = 'block' : item.style.display = 'none');
+}
+</script>
 </body>
 </html>
