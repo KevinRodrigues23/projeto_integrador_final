@@ -333,6 +333,8 @@ if(isset($_POST['order'])){
 
 
 <div class="tm-hero d-flex justify-content-center align-items-center conteiner" data-parallax="scroll" data-image-src="img/hero.jpg">
+
+
         <form class="d-flex tm-search-form">
             <input class="form-control tm-search-input" type="search" id="input" onkeyup="instantSearch()" placeholder="Pesquisar" aria-label="Pesquisar">
             <button class="btn btn-outline-success tm-search-btn" type="submit">
@@ -355,7 +357,7 @@ if(isset($_POST['order'])){
     <br/>
     <div class="row tm-mb-74 tm-row-1640">            
         <div class="col-lg-5 col-md-6 col-12 mb-3">
-            <img src="images/about.jpg"  alt="Image" class="img-fluid">
+            <img src="img/about.jpg"  alt="Image" class="img-fluid">
         </div>
         <div class="col-md-6 col-12">
             <div class="tm-about-img-text">
