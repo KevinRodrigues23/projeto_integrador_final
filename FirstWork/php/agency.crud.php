@@ -36,32 +36,6 @@
 
 
 
-    function cadastrarVaga($Cargo, $Salario, $carga_horaria, $Requisitos, $Categoria) 
-    {
-        $con = getConnection();
-
-        $sql = "insert into vaga (Cargo, Salario, carga_horaria, Requisitos, Categoria) values (:Cargo, :Salario, :carga_horaria, :Requisitos, :Categoria)";
-        
-        $stmt = $con->prepare($sql);
-
-        $stmt->bindParam(":Cargo", $Cargo);
-        $stmt->bindParam(":Salario", $Salario);
-        $stmt->bindParam(":carga_horaria", $carga_horaria);
-        $stmt->bindParam(":Requisitos", $Requisitos);
-        $stmt->bindParam(":Categoria", $Categoria);
-
-
-        $status = $stmt->execute();
-        unset($con);
-        unset($stmt);
-
-        if($status)
-            return true; 
-
-        return false; 
-    }
-
-
     function cadastrarEmpresa($CNPJ, $nome, $Local, $Hora_Funcionamento, $Logo) 
     {
         $con = getConnection();

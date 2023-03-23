@@ -1,3 +1,20 @@
+<?php 
+
+require 'php/config.php';
+require 'php/Vaga.php';
+
+if($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+
+  $vaga = new vaga($mysql);
+  $vaga->adicionar($_POST["Cargo"],$_POST["Salario"],$_POST["Carga_horaria"],$_POST["Requisitos"]
+  ,$_POST["Categoria"]);
+
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,50 +84,48 @@ https://templatemo.com/tm-556-catalog-z
                 <h2 class="tm-text-primary text-center mb-5">Cadastro de vaga</h2>
 
                 <div id="alertBox">
-                    <?php if($_GET) : ?>
-                        <h3 class="section-subheading"><strong>Ocoreu um erro ao tentar cadastrar no banco.</strong></h3>
-                    <?php endif; ?>
+                 
                 </div>
 
 
-                 <form id="vagaForm" data-sb-form-api-token="API_TOKEN" method="POST" action="php/vaga.cadastro.php" class="tm-contact-form mx-auto">
+                 <form id="vagaForm"  method="POST" action="php/Vaga.php" class="tm-contact-form mx-auto">
 
 
                  <div class="form-group">
-                         <input class="form-control" id="Cargo" name="inputCargo" type="text" placeholder="Informe o Cargo"
+                         <input class="form-control" id="Cargo" name="Cargo" type="text" placeholder="Informe o Cargo"
                         data-sb-validations="required" />
-                         <div class="invalid-feedback" data-sb-feedback="Cargo:required">O Cargo é requirida.</div>
+                         <div class="invalid-feedback">O Cargo é requirida.</div>
                  </div>
                  
                  <div class="form-group">
-                         <input class="form-control" id="Salario" name="inputSalario" type="number" placeholder="Informe o Salario"
+                         <input class="form-control" id="Salario" name="Salario" type="number" placeholder="Informe o Salario"
                         data-sb-validations="required" />
-                         <div class="invalid-feedback" data-sb-feedback="Salario:required">O Salario é requirida.</div>
+                         <div class="invalid-feedback">O Salario é requirida.</div>
                  </div>
 
                  <div class="form-group">
-                         <input class="form-control" id="carga_horaria" name="inputCarga_horaria" type="text" placeholder="Informe a Carga Horaria"
+                         <input class="form-control" id="carga_horaria" name="Carga_horaria" type="text" placeholder="Informe a Carga Horaria"
                         data-sb-validations="required" />
-                         <div class="invalid-feedback" data-sb-feedback="Carga Horaria:required">A Carga Horaria é requirida.</div>
+                         <div class="invalid-feedback">A Carga Horaria é requirida.</div>
                  </div>
 
                  
                  <div class="form-group">
-                         <input textarea rows="8"class="form-control" id="Requisitos"  name="inputRequisitos" type="message"  placeholder="Requisitos para a vaga " 
+                         <input textarea rows="8"class="form-control" id="Requisitos"  name="Requisitos" type="message"  placeholder="Requisitos para a vaga " 
                         data-sb-validations="required" />
-                         <div class="invalid-feedback" data-sb-feedback="Requisitos:required">Requisitos para a vaga. </textarea></div>
+                         <div class="invalid-feedback">Requisitos para a vaga. </textarea></div>
                  </div>
 
                  <div class="form-group">
-                         <input textarea rows="8"class="form-control" id="Categoria"  name="inputCategoria" type="message"  placeholder="Categoria da vaga  " 
+                         <input textarea rows="8"class="form-control" id="Categoria"  name="Categoria" type="message"  placeholder="Categoria da vaga  " 
                         data-sb-validations="required" />
-                         <div class="invalid-feedback" data-sb-feedback="Categoria:required">Categoria da vaga. </textarea></div>
+                         <div class="invalid-feedback">Categoria da vaga. </textarea></div>
                  </div>
                  </Br>
                     
 
                      
-                     <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit">Cadastrar <i class="fa fa-check" aria-hidden="true"></i></button></div>
+                     <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase"  type="submit">Cadastrar <i class="fa fa-check" aria-hidden="true"></i></button></div>
                 </form>                
             </div>
         </div> <!-- container-fluid, tm-container-content -->

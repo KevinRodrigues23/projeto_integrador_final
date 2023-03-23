@@ -12,12 +12,12 @@ class vaga    // class produto
 
     public function adicionar(string $Cargo ,string $Salario, string $Carga_horaria,string $Requisitos,string $Categoria,): void
     {
-        $insereVaga = $this->mysql->prepare('INSERT INTO vagas (Cargo, Salario , Carga_horaria, Requisitos, Categoria) VALUES (?,?,?,?,?,);');
+        $insereVaga = $this->mysql->prepare('INSERT INTO vagas (Cargo, Salario , Carga_horaria, Requisitos, Categoria) VALUES (?,?,?,?,?);');
         $insereVaga->bind_param('sssss' , $Cargo ,$Salario, $Carga_horaria, $Requisitos, $Categoria);
         $insereVaga->execute();
     }
 
-
+    return $vagas;
 
 
 
