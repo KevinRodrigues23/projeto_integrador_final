@@ -70,16 +70,15 @@ if(!isset($admin_id)){
       </div>
 
       <div class="box">
-         <?php
-            $select_orders = $conn->prepare("SELECT * FROM `orders`");
-            $select_orders->execute();
-            $number_of_orders = $select_orders->rowCount()
-         ?>
-         <h3><?= $number_of_orders; ?></h3>
-         <p>orders placed</p>
-         <a href="admin_orders.php" class="btn">see orders</a>
-      </div>
-
+    <?php
+        $select_box_messages = $conn->prepare("SELECT * FROM `boxmessages`");
+        $select_box_messages->execute();
+        $number_of_messages = $select_box_messages->rowCount();
+    ?>
+    <h3><?= $number_of_messages; ?></h3>
+    <p>messages received</p>
+    <a href="admin_boxmessages.php" class="btn">see messages</a>
+</div>
       <div class="box">
          <?php
             $select_products = $conn->prepare("SELECT * FROM `products`");

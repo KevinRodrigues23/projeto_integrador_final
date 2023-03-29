@@ -1,8 +1,19 @@
+
+<?php
+
+
+include 'Artigo.php';
+$artigo = new Artigo($mysql);
+$artigos = $artigo->exibirTodos();
+
+?>
+
 <?php
 
 include 'config.php';
 
 session_start();
+
 
 if(isset($_SESSION['user_id'])){
    $user_id = $_SESSION['user_id'];
@@ -76,7 +87,7 @@ if(isset($_POST['add_to_cart'])){
       $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ? AND name = ?");
       $select_cart->execute([$user_id, $name]);
 
-      if($select_cart->rowCount() > 0){
+      if($select_cart->rowCount() > 1){
          $message[] = 'already added to cart';
       }else{
          $insert_cart = $conn->prepare("INSERT INTO `cart`(user_id, pid, name, price, quantity, image) VALUES(?,?,?,?,?,?)");
@@ -104,7 +115,7 @@ if(isset($_POST['order'])){
       $total_price = $_POST['total_price'];
       $total_products = $_POST['total_products'];
 
-      $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+      $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = 1");
       $select_cart->execute([$user_id]);
 
       if($select_cart->rowCount() > 0){
@@ -162,13 +173,13 @@ if(isset($_POST['order'])){
 
    <section class="flex">
 
-      <a href="index.php" class="logo"><img src="./images/logotipo.png" width="200px" alt=""></a>
+      <a href="index.php" class="logo"><img src="img/logotipo.png" width="200px" alt=""></a>
 
       <nav class="navbar">
          <a href="index.php">Início</a>
-         <a href="contact.php">about</a>
-         <a href="#menu">menu</a>
-         <a href="sendjobs.php">order</a>
+         <a href="contact.php">Sobre</a>
+         
+         
          
       </nav>
 
@@ -181,7 +192,7 @@ if(isset($_POST['order'])){
             $count_cart_items->execute([$user_id]);
             $total_cart_items = $count_cart_items->rowCount();
          ?>
-         <div id="cart-btn" class="fas fa-shopping-cart"><span>(<?= $total_cart_items; ?>)</span></div>
+        
       </div>
 
    </section>
@@ -303,10 +314,10 @@ if(isset($_POST['order'])){
          <a href="index.php?delete_cart_item=<?= $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('delete this cart item?');"></a>
          <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
          <div class="content">
-          <p> <?= $fetch_cart['name']; ?> <span>(<?= $fetch_cart['price']; ?> x <?= $fetch_cart['quantity']; ?>)</span></p>
+          <p> <b><?= $fetch_cart['name']; ?></b> <span>Salário <?= $fetch_cart['price']; ?></span></p>
           <form action="" method="post">
              <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
-             <input type="number" name="qty" class="qty" min="1" max="99" value="<?= $fetch_cart['quantity']; ?>" onkeypress="if(this.value.length == 2) return false;">
+             <input type="number" name="qty" class="qty" min="1" max="99" value="<?= $fetch_cart['quantity']; ?>" onkeypress="if(this.value.length == 2) return false;" disabled>
                <button type="submit" class="fas fa-edit" name="update_qty"></button>
           </form>
          </div>
@@ -318,97 +329,107 @@ if(isset($_POST['order'])){
       }
       ?>
 
-      <div class="cart-total"> grand total : <span>$<?= $grand_total; ?>/-</span></div>
+      <div class="cart-total">Quero me candidata a esta vaga<span><?= $grand_total; ?></span></div>
 
-      <a href="sendjobs.php" class="btn">order now</a>
+      <a href="sendjobs.php" class="btn">Quero me candidata</a>
 
    </section>
 
 </div>
 
 <!--  -->
-<!--  -->
 
-<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg"></div>
+    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg"></div>        
+
+
+
 <section class="page-section" id="vaga">
     <div class="container-fluid tm-mt-60">
         <div class="row tm-mb-50">
             <div class="col-lg-22 col-14 mb-5">
+                <h2 class="tm-text-primary text-center mb-5">Cadastro de vaga</h2>
 
-<form action="" method="post">
-
-   <div class="display-orders">
-
-   <?php
-         $grand_total = 0;
-         $cart_item[] = '';
-         $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
-         $select_cart->execute([$user_id]);
-         if($select_cart->rowCount() > 0){
-            while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-              $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']);
-              $grand_total += $sub_total; 
-              $cart_item[] = $fetch_cart['name'].'  '.$fetch_cart['price'];
-              $total_products = implode($cart_item);
-              echo '<h1>'.$fetch_cart['name'].'</h1>';
-             
-            }
-         }else{
-            echo '<p class="empty"><span>your cart is empty!</span></p>';
-         }
-      ?>
+                <div id="alertBox">
+                    <?php if($_GET) : ?>
+                        <h3 class="section-subheading"><strong>Ocoreu um erro ao tentar cadastrar no banco.</strong></h3>
+                    <?php endif; ?>
+                </div>
 
 
-
-
-   </div>
-   
-      <div class="grand-total"> grand total : <span>R$: <?= $total_products; ?></span></div>
-
-      <input type="hidden" name="total_products" value="<?= $total_products; ?>">
-      <input type="hidden" name="total_price" value="<?= $grand_total; ?>">
-
-      <div class="flex">
-         <div class="form-group">
-            <span>NOME COMPLETO :</span>
-            <input class="form-control" type="text" name="name" class="box" required placeholder="Nome completo" maxlength="20">
-         </div>
-         <div class="form-group">
-            <span>TELEFONE :</span>
-            <input class="form-control" type="number" name="number" class="box" required placeholder="Telefone completo" min="0" max="9999999999" onkeypress="if(this.value.length == 10) return false;">
-         </div>
-         <div class="form-group">
-            <span> Email</span>
-            <input class="form-control" type="text" name="flat" class="box" required placeholder="Digite o seu email" maxlength="50">
-         </div>
-
-         <div class="form-group">
-            <span>ENSINO</span>
-            <select class="form-control" name="method" class="box">
-               <option value="cash on delivery">ensino fundamendal</option>
-               <option value="credit card">ensino médio</option>
-               <option value="paytm">ensino incompletado</option>
-               <option value="paypal">ensino superio</option>
-            </select>
-         </div>
-        
-         <div class="form-group">>
-            <span>Endereço</span>
-            <input  class="form-control" type="text" name="street" class="box" required placeholder="Informe o seu Endereço." maxlength="50">
-         </div>
-         <div class="form-group">
-            <span>CEP</span>
-            <input class="form-control" type="number" name="pin_code" class="box" required placeholder="informe o seu cep" min="0" max="999999" onkeypress="if(this.value.length == 6) return false;">
-         </div>
-      </div>
-
-      <input type="submit" value="Enviar o cadastro" class="btn form-control" name="order">
-
-   </form>
-   
-   </div> <!-- container-fluid, tm-container-content -->
+                <form method="POST" action="boxMessage.php">
+                <label for="id_boxMessage">ID da mensagem:</label>
+                    <div class="form-group">
+                        <label for="nome_boxMessage">Nome:</label>
+                        <input  class="form-control type="text" name="nome_boxMessage" id="nome_boxMessage">
+                    </div>
+                    <div class="form-group">
+                        <label for="email_boxMessage">E-mail:</label>
+                        <input class="form-control" type="email" name="email_boxMessage" id="email_boxMessage">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone_boxMessage">Telefone:</label>
+                        <input class="form-control" type="text" name="telefone_boxMessage" id="telefone_boxMessage">
+                    </div>
+                        <div class="form-group">
+                        <label for="message_boxMessage">Mensagem:</label>
+                        <textarea class="form-control" name="message_boxMessage" id="message_boxMessage"></textarea>
+                    </div>
+                        <button  class="btn btn-primary btn-xl text-uppercase" type="submit">Enviar</button>
+                        </form>      
+            </div>
+        </div> <!-- container-fluid, tm-container-content -->
     </section>
 
+
+
+
+
+
+    <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
+        <div class="container-fluid tm-container-small">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-12 px-5 mb-5">
+                    <h3 class="tm-text-primary mb-4 tm-footer-title">Sobre o First Work</h3>
+                    <p>Estamos Construindo essa plataforma que vai auxiliar jovens inexperientes a ingressar no mercado de trabalho</p>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
+                    <h3 class="tm-text-primary mb-4 tm-footer-title">Our Links</h3>
+                    <ul class="tm-footer-links pl-0">
+                        <li><a href="#">Advertise</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Our Company</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12 px-5 mb-5">
+                    <ul class="tm-social-links d-flex justify-content-end pl-0 mb-5">
+                        <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
+                        <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
+                        <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
+                        <li class="mb-2"><a href="https://pinterest.com"><i class="fab fa-pinterest"></i></a></li>
+                    </ul>
+                   
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-7 col-12 px-5 mb-3">
+                    Copyright 2020 Catalog-Z Company. All rights reserved.
+                </div>
+                <div class="col-lg-4 col-md-5 col-12 px-5 text-right">
+                    Designed by <a href="https://templatemo.com" class="tm-text-gray" rel="sponsored" target="_parent">TemplateMo</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/plugins.js"></script>
+    <script>
+        $(window).on("load", function() {
+            $('body').addClass('loaded');
+        });
+    </script>
+</body>
+</html>
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>
@@ -420,5 +441,3 @@ if(isset($_POST['order'])){
 <!-- custom js file link  -->
 <script src="js/index.js"></script>
 
-</body>
-</html>

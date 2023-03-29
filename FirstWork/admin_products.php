@@ -34,8 +34,8 @@ if(isset($_POST['add_product'])){
       if($image_size > 2000000){
          $message[] = 'image size is too large!';
       }else{
-         $insert_product = $conn->prepare("INSERT INTO `products`(name,descricao, price, image) VALUES(?,?,?,?)");
-         $insert_product->execute([$name,$descricao, $price, $image]);
+         $insert_product = $conn->prepare("INSERT INTO `products`(name, price, image) VALUES(?,?,?)");
+         $insert_product->execute([$name, $price, $image]);
          move_uploaded_file($image_tmp_name, $image_folder);
          $message[] = 'Nova vaga adicionado!';
       }
@@ -84,7 +84,7 @@ if(isset($_GET['delete'])){
    <h1 class="heading">add product</h1>
 
    <form action="" method="post" enctype="multipart/form-data">
-      <input type="text" class="box" required maxlength="100" placeholder="enter product name" name="name">
+      <input type="text" class="box" required maxlength="500" placeholder="enter product name" name="name">
       <textarea type="text" class="box" placeholder="enter product name" name="descricao"></textarea>
       <input type="number" min="0" class="box" required max="9999999999" placeholder="Salário" onkeypress="if(this.value.length == 10) return false;" name="price">
       <input type="file" name="image" accept="image/jpg, image/jpeg, image/png" class="box" required>

@@ -1,3 +1,13 @@
+
+<?php
+
+
+include 'Artigo.php';
+$artigo = new Artigo($mysql);
+$artigos = $artigo->exibirTodos();
+
+?>
+
 <?php
 
 include 'config.php';
@@ -77,7 +87,7 @@ if(isset($_POST['add_to_cart'])){
       $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ? AND name = ?");
       $select_cart->execute([$user_id, $name]);
 
-      if($select_cart->rowCount() > 0){
+      if($select_cart->rowCount() > 1){
          $message[] = 'already added to cart';
       }else{
          $insert_cart = $conn->prepare("INSERT INTO `cart`(user_id, pid, name, price, quantity, image) VALUES(?,?,?,?,?,?)");
@@ -105,7 +115,7 @@ if(isset($_POST['order'])){
       $total_price = $_POST['total_price'];
       $total_products = $_POST['total_products'];
 
-      $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+      $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = 1");
       $select_cart->execute([$user_id]);
 
       if($select_cart->rowCount() > 0){
@@ -182,7 +192,7 @@ if(isset($_POST['order'])){
             $count_cart_items->execute([$user_id]);
             $total_cart_items = $count_cart_items->rowCount();
          ?>
-         <div id="cart-btn" class="fas fa-shopping-cart"><span>(<?= $total_cart_items; ?>)</span></div>
+        
       </div>
 
    </section>
@@ -340,7 +350,7 @@ if(isset($_POST['order'])){
                 <i class="fas fa-search"></i>
             </button>
         </form>
-    </div>
+</div>
 
 
 <div class="container-fluid tm-container-content tm-mt-60">
@@ -356,60 +366,17 @@ if(isset($_POST['order'])){
         </div>
         <div class="row tm-mb-90 tm-gallery">
 
-        <?php
-         $select_products = $conn->prepare("SELECT * FROM `products`");
-         $select_products->execute();
-         if($select_products->rowCount() > 0){
-            while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){    
-      ?>
 
-           
-        	<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
-                <a href="jobs.php?id=<?php echo $fetch_products['id'];?>">
-                <figure class="effect-ming tm-video-item item item">
-                <img src="uploaded_img/<?= $fetch_products['image'] ?>" alt="">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2><?= $fetch_products['name'] ?></b></h2>
-                        <?= $fetch_products['price'] ?>
-                        
-                    </figcaption>  
-                    
-            </a>
 
-                <h4><?= $fetch_products['descricao'] ?></h4>
+
+        <?php foreach ($artigos as $artigo) : ?>
             
-                </figure>
-                <form action="" method="post">
-            <input type="hidden" name="pid" value="<?= $fetch_products['id'] ?>">
-            <input type="hidden" name="name" value="<?= $fetch_products['name'] ?>">
-            <input type="hidden" name="price" value="<?= $fetch_products['price'] ?>">
-            <input type="hidden" name="image" value="<?= $fetch_products['image'] ?>">
-            
-            <input type="submit" class="btn" name="add_to_cart" value="add to cart">
-         </form>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span class="tm-text-gray-light">18 Oct 2020</span>
-                    <span>##</span>
-                </div>
-                
-            </div>
-       
-
-            <?php
-         }
-      }else{
-         echo '<p class="empty">no products added yet!</p>';
-      }
-      ?>
-
-
-
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
                 <figure class="effect-ming tm-video-item item item">
                     <img src="img/agricultura.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>agricultura</h2>
-                        <a href="categoria.php">Ver vaga</a>
+                        <h2><?php echo $artigo['titulo'];?></h2>
+                        <a href="vaga-sigle.php?id=<?php echo $artigo['id']; ?>">Ver vaga</a>
                     </figcaption>                    
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">
@@ -417,6 +384,12 @@ if(isset($_POST['order'])){
                     <span>##</span>
                 </div>
             </div>
+        
+            <?php endforeach; ?>
+
+
+
+
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5 item">
                 <figure class="effect-ming tm-video-item item item">
                     <img src="img/biologia.jpg" alt="Image" class="img-fluid">

@@ -38,7 +38,7 @@ if(isset($_GET['delete'])){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>orders</title>
 
-   <!-- font awesome cdn link  -->
+   <!-- font awesome cdn link  -->z
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
    <!-- custom admin style link  -->
@@ -66,8 +66,6 @@ if(isset($_GET['delete'])){
       <p> name : <span><?= $fetch_orders['name']; ?></span> </p>
       <p> number : <span><?= $fetch_orders['number']; ?></span> </p>
       <p> address : <span><?= $fetch_orders['address']; ?></span> </p>
-      <p> total products : <span><?= $fetch_orders['total_products']; ?></span> </p>
-      <p> total price : <span><?= $fetch_orders['total_price']; ?></span> </p>
       <p> payment method : <span><?= $fetch_orders['method']; ?></span> </p>
       <form action="" method="post">
          <input type="hidden" name="order_id" value="<?= $fetch_orders['id']; ?>">
