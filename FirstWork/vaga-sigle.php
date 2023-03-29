@@ -349,9 +349,9 @@ if(isset($_POST['order'])){
 <div class="conteiner mt-1">
 	<div class="row">
 		<div class="col-sm-11 article-body">
-			<div class="article-cover" style="background-image: url(img/capa-emprego.php);">
-				<h2><?php echo $artigo['titulo']; ?></h3>
-				<h3><?php echo $artigo['nome']; ?></h4>
+			<div class="article-cover">
+				<h3><?php echo $artigo['titulo']; ?></h3>
+				<h4><?php echo $artigo['nome']; ?></h4>
 				<p class="timestamp">17th Jan, 2017</p>
 			</div>
 			<div class="article-content">
@@ -399,8 +399,8 @@ if(isset($_POST['order'])){
 
 		.article-body {
 			background-color: #FFF;
-			padding: 0;
-			margin-top: 15px;
+			padding: 2%;
+			margin-top: 20px;
 			
 			border:1px solid rgba(0,0,0,0.1);
 			min-height: 600px;
@@ -408,29 +408,31 @@ if(isset($_POST['order'])){
 
 		}
 
-		.article  {
-			background: url(img/capa-emprego.php);
+		.article-cover  {
+			background: url(https://cdn.diferenca.com/imagens/trabalho-e-emprego-og.jpg);
 			height: 302px;
-			color: black;
+			color: #FFF;
 			box-shadow:1px 1px 10px rgba(0, 0, 0, 0.3);
 			z-index: 1;
 		}
+         
 
 		.article-cover h3 {
 			margin-top:180px;
 			display: inline-block;
-			padding-left: 50px;
+			padding: 60px;
+         font-size: 25px;
 		}
-		.article-cover h3 {
-			padding-left: 10%;	
+		.article-cover h4 {
+			padding: 60px;	
 			font-weight: normal;
 			text-transform: uppercase;
-			font-size: 25px;
+			
 		}
 
 		.article-cover p.timestamp {
 			padding-left: 50px;
-			font-size: 12px;
+			
 		}
 
 		.article-content{
@@ -443,8 +445,7 @@ if(isset($_POST['order'])){
 		}
 
 		.article-content p {
-			font-size: 18px;
-         color: black;
+			font-size: 16px;
 		}
 
 		.article-content p strong {

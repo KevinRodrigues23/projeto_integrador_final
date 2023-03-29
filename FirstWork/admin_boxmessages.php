@@ -10,12 +10,16 @@ $select_boxmessages->execute();
 if ($select_boxmessages->rowCount() > 0) {
   while ($fetch_boxmessages = $select_boxmessages->fetch(PDO::FETCH_ASSOC)) {
 ?>
+<div class="container-fluid tm-mt-60">
+    <div class="row mb-4">
+
+    <div class="box-container">
     <div class="box">
-      <p> placed on : <span><?= $fetch_boxmessages['placed_on']; ?></span> </p>
-      <p> name : <span><?= $fetch_boxmessages['nome_boxMessage']; ?></span> </p>
-      <p> email : <span><?= $fetch_boxmessages['email_boxMessage']; ?></span> </p>
-      <p> telefone : <span><?= $fetch_boxmessages['telefone_boxMessage']; ?></span> </p>
-      <p> message : <span><?= $fetch_boxmessages['address_boxMessage']; ?></span> </p>
+      <p class="card-text"> placed on : <span><?= $fetch_boxmessages['placed_on']; ?></span> </p>
+      <p class="card-text"> name : <span><?= $fetch_boxmessages['nome_boxMessage']; ?></span> </p>
+      <p class="card-text"> email : <span><?= $fetch_boxmessages['email_boxMessage']; ?></span> </p>
+      <p class="card-text"> telefone : <span><?= $fetch_boxmessages['telefone_boxMessage']; ?></span> </p>
+      <p class="card-text"> message : <span><?= $fetch_boxmessages['address_boxMessage']; ?></span> </p>
       
       <form action="" method="post">
         <input type="hidden" name="order_id" value="<?= $fetch_boxmessages['id_boxMessage']; ?>">
@@ -30,6 +34,8 @@ if ($select_boxmessages->rowCount() > 0) {
         </div>
       </form>
     </div>
+  </div>
+  </div>
 <?php
   }
 } else {
